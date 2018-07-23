@@ -81,10 +81,41 @@ sum = reduce(lambda x, y: x+y, range(1,101))
 ### concatenating
 ```
 from functools import reduce
-phrases = ['Floating-point', 'calculations', 'are', 'innacure','because', 'of', 'how', 'the', 'underlying', 'platform', 'handles', 'floating-point', '']
+phrases = ['Floating-point', 'calculations', 'are', 'innacure','because', 'of', 'how', 'the', 'underlying', 'platform', 'handles', 'floating-point']
 sentense = reduce(lambda x, y: x+" "+y, phrases)
 
 ```
 
+### unpack list of lists
+```
+from functools import reduce
+list_of = [[1, 2, 3], [4, 5], [6, 7, 8]]
+d = reduce(lambda x,y: x+y, list_of, [])
+print(d)
+```
 
+### get rid of join method, although it takes more time
+
+```
+from functools import reduce
+list_of = [1, 2, 3, 4, 5, 6, 7, 8]
+d = reduce(lambda a,d: str(a)+str(d), [1,2,3,4,5,6,7,8])
+print(d)
+```
+
+### replacing JSON path (found on stackoverflow)
+
+```
+You could replace value = json_obj['a']['b']['c']['d']['e'] with:
+
+value = reduce(dict.__getitem__, 'abcde', json_obj)
+```
+
+### union and intersection of a set (found on stackoverflow)
+```
+>>> reduce(operator.or_, ({1}, {1, 2}, {1, 3}))  # union
+{1, 2, 3}
+>>> reduce(operator.and_, ({1}, {1, 2}, {1, 3}))  # intersection
+{1}
+```
 
