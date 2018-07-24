@@ -1,74 +1,62 @@
-How many times have you tried but in the end never applied reduce? I hope
-my article will help you to understand it better and apply it to places
-you never thought reduce is suitable for.
+# Problem
+1. You need to shorten your code and make operation on an iterable object (list etc)
+2. You want to apply a function to all iterables on the list and return a single result
+3. ???
 
-
-## What is reduce?
-Function reduce continually applies the function func() to the iterable parameter.
-In the end it returns a single value. We may think of it as of recursion.
 
 ## Example
-Lets take an example here:
+
 ```
 from functools import reduce
-numbers = [1, 2, 3, 4, 5, 6]
-reduce(lambda result, x: res*x, numbers)
-```
-The left argument, result, represents the accumulated value, basically
-where we store passing result and the value we return at the end.
-The right argument, x, is the update value from the iterable.
-
-
-## So what arguments it takes?
-
-It takes the first two elements of the list and calculates func(A,B).
-Then it requests next element C and calculates func(func(A, B), C).
-And continues until the iterable is exhausted.
-
-At each step, reduce passes the current product or division, along with
-the next item from the list, to the passed-in lambda function.
-What we get is
-
-```
-(((((1*2)*3)*4)*5)*6)
+numbers = [2, 3, 4, 5, 6]
+reduce(lambda result, x: result*x, numbers)
 ```
 
+"result" is the accumulated value, basically
+where we store passing result and the value we return at the end;
 
-## Third argument
+"x" is the next value from the list;
+
+### How does it work?
+
 ```
-numbers = [1, 2, 3, 4, 5, 6]
+((((2*3)*4)*5)*6)
+>>>> 720
+```
+
+```
+enter a video here
+```
+
+### Third argument
+Third argument - 1 - is the starting point.
+
+```
+numbers = [2, 3, 4, 5, 6]
 reduce(lambda result, x: result*x, numbers, 1)
 ```
 
 ```
 (((((1*2)*3)*4)*5)*6)
+>>>> 720
 ```
 
-Third argument - 1 - is the initial value, starting point.
-1 is the first calculation.
 
-## We pass not an iterable
+## Quick and cool examples
 
-If the iterable returns no values at all,
-a TypeError exception is raised.
-
-## Let's take a look at examples now
-
-### Copy a list
+### copy list
 ```
 from functools import reduce
-list_of_vals = [1,2,3,4,5]
-new_list_copy = list(reduce(lambda xs, x: xs+ x, [], list_of))
-print(new_list_copy)
-```
-if you won't use list in new_list_copy, it will link to already
-existing list_of_vals in memory
+numbers = [2, 3, 4, 5, 6]
+result = reduce(lambda res, x: res + [x], numbers, [])
 
-### max
+```
+
+### max (min)
 ```
 from functools import reduce
-f = lambda a,b: a if (a > b) else b
-max_num = reduce(f, [47,11,42,102,13])
+finding_max = lambda a,b: a if (a > b) else b
+max_num = reduce(finding_max, [55, 34, 414, 48, 18])
 
 ```
 
@@ -81,7 +69,7 @@ sum = reduce(lambda x, y: x+y, range(1,101))
 ### concatenating
 ```
 from functools import reduce
-phrases = ['Floating-point', 'calculations', 'are', 'innacure','because', 'of', 'how', 'the', 'underlying', 'platform', 'handles', 'floating-point']
+phrases = ['Floating-point', 'calculations','in', 'python', 'are', 'innacure']
 sentense = reduce(lambda x, y: x+" "+y, phrases)
 
 ```
@@ -89,18 +77,16 @@ sentense = reduce(lambda x, y: x+" "+y, phrases)
 ### unpack list of lists
 ```
 from functools import reduce
-list_of = [[1, 2, 3], [4, 5], [6, 7, 8]]
-d = reduce(lambda x,y: x+y, list_of, [])
-print(d)
+list_of_vals = [[1, 2, 3], [4, 5], [6, 7, 8]]
+result = reduce(lambda x,y: x+y, list_of_vals, [])
 ```
 
 ### get rid of join method, although it takes more time
 
 ```
 from functools import reduce
-list_of = [1, 2, 3, 4, 5, 6, 7, 8]
-d = reduce(lambda a,d: str(a)+str(d), [1,2,3,4,5,6,7,8])
-print(d)
+list_of_vals = [1, 2, 3, 4, 5, 6, 7, 8]
+result = reduce(lambda a,d: str(a)+str(d), list_of_vals)
 ```
 
 ### replacing JSON path (found on stackoverflow)
